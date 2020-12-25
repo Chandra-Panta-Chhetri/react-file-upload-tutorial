@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import FileUpload from "./components/file-upload/file-upload.component";
 
-function App() {
+import { connect } from "react-redux";
+import { createNewUser } from "./redux/user/user.actions";
+
+function App({ createNewUser }) {
+  const [newUserInfo, setNewUserInfo] = useState({
+    profileImages: []
+  });
+
+  const updateUploadedFiles = (files) =>
+    setNewUserInfo({ ...newUserInfo, profileImages: files });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    createNewUser(newUserInfo);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <FileUpload
+          accept=".jpg,.png,.jpeg"
+          label="User Profile Image(s)"
+          updateFilesCb={updateUploadedFiles}
+          multiple
+        />
+        <button type="submit">Create New User</button>
+      </form>
     </div>
   );
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  createNewUser: (newUserInfo) => dispatch(createNewUser(newUserInfo))
+});
+
+export default connect(null, mapDispatchToProps)(App);
