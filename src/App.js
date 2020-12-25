@@ -22,7 +22,7 @@ function App({ createNewUser }) {
       <form onSubmit={handleSubmit}>
         <FileUpload
           accept=".jpg,.png,.jpeg"
-          label="User Profile Image(s)"
+          label="Profile Image(s)"
           updateFilesCb={updateUploadedFiles}
           multiple
         />

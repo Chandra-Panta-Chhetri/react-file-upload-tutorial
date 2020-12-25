@@ -177,10 +177,11 @@ export const RemoveFileIcon = styled.i`
 `;
 
 export const PreviewContainer = styled.section`
-  padding: 0.4em;
-  width: 33.33%;
-  height: 180px;
+  padding: 0.25rem;
+  width: 20%;
+  height: 120px;
   border-radius: 6px;
+  box-sizing: border-box;
 
   &:hover {
     opacity: 0.55;
@@ -193,6 +194,10 @@ export const PreviewContainer = styled.section`
   & > div:first-of-type {
     height: 100%;
     position: relative;
+  }
+
+  @media only screen and (max-width: 750px) {
+    width: 25%;
   }
 
   @media only screen and (max-width: 500px) {
