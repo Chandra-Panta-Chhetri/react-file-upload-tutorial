@@ -13,27 +13,26 @@ import {
   InputLabel
 } from "./file-upload.styles";
 
-const KILO_BYTES_PER_BYTE = 1024;
+const KILO_BYTES_PER_BYTE = 1000;
+const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 5000000;
+
+const convertNestedObjectToArray = (nestedObj) =>
+  Object.keys(nestedObj).map((key) => nestedObj[key]);
+
+const convertBytesToKB = (bytes) => Math.round(bytes / KILO_BYTES_PER_BYTE);
 
 const FileUpload = ({
   label,
   updateFilesCb,
-  maxFileSizeInBytes = 500000,
-  defaultFiles = {},
+  maxFileSizeInBytes = DEFAULT_MAX_FILE_SIZE_IN_BYTES,
   ...otherProps
 }) => {
   const fileInputField = useRef(null);
-  const [files, setFiles] = useState(defaultFiles);
+  const [files, setFiles] = useState({});
 
   const handleUploadBtnClick = () => {
     fileInputField.current.click();
   };
-
-  const convertNestedObjectToArray = (nestedObj) =>
-    Object.keys(nestedObj).map((key) => nestedObj[key]);
-
-  const convertBytesToKiloBytes = (bytes) =>
-    Math.round(bytes / KILO_BYTES_PER_BYTE);
 
   const addNewFiles = (newFiles) => {
     for (let file of newFiles) {
@@ -88,7 +87,7 @@ const FileUpload = ({
       <FilePreviewContainer>
         <span>To Upload</span>
         <PreviewList>
-          {(Object.keys(files) || []).map((fileKey, index) => {
+          {Object.keys(files).map((fileKey, index) => {
             let file = files[fileKey];
             let isImageFile = file.type.split("/")[0] === "image";
             return (
@@ -103,7 +102,7 @@ const FileUpload = ({
                   <FileMetaData isImageFile={isImageFile}>
                     <span>{file.name}</span>
                     <aside>
-                      <span>{convertBytesToKiloBytes(file.size)} kb</span>
+                      <span>{convertBytesToKB(file.size)} kb</span>
                       <RemoveFileIcon
                         className="fas fa-trash-alt"
                         onClick={() => removeFile(fileKey)}
