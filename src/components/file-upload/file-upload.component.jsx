@@ -14,12 +14,13 @@ import {
 } from "./file-upload.styles";
 
 const KILO_BYTES_PER_BYTE = 1000;
-const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 5000000;
+const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 500000;
 
 const convertNestedObjectToArray = (nestedObj) =>
   Object.keys(nestedObj).map((key) => nestedObj[key]);
 
-const convertBytesToKB = (bytes) => Math.round(bytes / KILO_BYTES_PER_BYTE);
+const convertBytesToKiloBytes = (bytes) =>
+  Math.round(bytes / KILO_BYTES_PER_BYTE);
 
 const FileUpload = ({
   label,
@@ -87,11 +88,11 @@ const FileUpload = ({
       <FilePreviewContainer>
         <span>To Upload</span>
         <PreviewList>
-          {Object.keys(files).map((fileKey, index) => {
-            let file = files[fileKey];
+          {Object.keys(files).map((fileName, index) => {
+            let file = files[fileName];
             let isImageFile = file.type.split("/")[0] === "image";
             return (
-              <PreviewContainer key={fileKey}>
+              <PreviewContainer key={fileName}>
                 <div>
                   {isImageFile && (
                     <ImagePreview
@@ -102,10 +103,10 @@ const FileUpload = ({
                   <FileMetaData isImageFile={isImageFile}>
                     <span>{file.name}</span>
                     <aside>
-                      <span>{convertBytesToKB(file.size)} kb</span>
+                      <span>{convertBytesToKiloBytes(file.size)} kb</span>
                       <RemoveFileIcon
                         className="fas fa-trash-alt"
-                        onClick={() => removeFile(fileKey)}
+                        onClick={() => removeFile(fileName)}
                       />
                     </aside>
                   </FileMetaData>
