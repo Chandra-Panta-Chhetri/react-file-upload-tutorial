@@ -19,8 +19,7 @@ const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 500000;
 const convertNestedObjectToArray = (nestedObj) =>
   Object.keys(nestedObj).map((key) => nestedObj[key]);
 
-const convertBytesToKiloBytes = (bytes) =>
-  Math.round(bytes / KILO_BYTES_PER_BYTE);
+const convertBytesToKB = (bytes) => Math.round(bytes / KILO_BYTES_PER_BYTE);
 
 const FileUpload = ({
   label,
@@ -103,7 +102,7 @@ const FileUpload = ({
                   <FileMetaData isImageFile={isImageFile}>
                     <span>{file.name}</span>
                     <aside>
-                      <span>{convertBytesToKiloBytes(file.size)} kb</span>
+                      <span>{convertBytesToKB(file.size)} kb</span>
                       <RemoveFileIcon
                         className="fas fa-trash-alt"
                         onClick={() => removeFile(fileName)}

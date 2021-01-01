@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import FileUpload from "./components/file-upload/file-upload.component";
 
-import { connect } from "react-redux";
-import { createNewUser } from "./redux/user/user.actions";
-
-function App({ createNewUser }) {
+function App() {
   const [newUserInfo, setNewUserInfo] = useState({
     profileImages: []
   });
@@ -14,7 +11,7 @@ function App({ createNewUser }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createNewUser(newUserInfo);
+    //logic to create new user...
   };
 
   return (
@@ -23,8 +20,8 @@ function App({ createNewUser }) {
         <FileUpload
           accept=".jpg,.png,.jpeg"
           label="Profile Image(s)"
-          updateFilesCb={updateUploadedFiles}
           multiple
+          updateFilesCb={updateUploadedFiles}
         />
         <button type="submit">Create New User</button>
       </form>
@@ -32,8 +29,4 @@ function App({ createNewUser }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  createNewUser: (newUserInfo) => dispatch(createNewUser(newUserInfo))
-});
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;
