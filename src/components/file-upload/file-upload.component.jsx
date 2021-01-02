@@ -36,7 +36,7 @@ const FileUpload = ({
 
   const addNewFiles = (newFiles) => {
     for (let file of newFiles) {
-      if (file.size < maxFileSizeInBytes) {
+      if (file.size <= maxFileSizeInBytes) {
         if (!otherProps.multiple) {
           return { file };
         }
